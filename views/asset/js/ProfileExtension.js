@@ -90,6 +90,31 @@ ProfileExtension = function (parent) {
     });
   };
 
+  /** Verifies facebook permissions, since user_birthday is required.
+   * @private
+   * @methodOf ProfileExtension
+   */
+  var checkPermissions = function () {
+    FB.api("/me/permissions", function (response) {
+      var permissions = response.data;
+      var connectButton = parent.find(".js-facebook-connect");
+      var i;
+
+      for (i = 0; i < permissions.length; i++) {
+        if (permissions[i].hasOwnProperty("user_birthday") &&
+          permissions[i].user_birthday === 1) {
+
+          connect();
+          return;
+        }
+      }
+
+      // Required permissions not found.
+      connectButton.find(".js-button-text").html("Give permissions")
+      connectButton.css({ display: "inline-block" });
+    });
+  };
+
   /** Initializes DOM event listeners.
    * @private
    * @methodOf ProfileExtension#
@@ -97,8 +122,13 @@ ProfileExtension = function (parent) {
   var initEventListeners = function () {
     parent.find(".js-facebook-connect").click(function () {
       FB.login(function (response) {
-        connect();
-      }, "user_birthday");
+        if (response.authResponse) {
+          parent.find(".js-facebook-connect").hide();
+          checkPermissions();
+        } else {
+          status("Please, connect with Facebook");
+        }
+      }, {scope: "user_birthday" });
     });
     parent.find(".js-search").click(function (event) {
       var firstName = parent.find("input[name='first-name']").val();
@@ -119,11 +149,12 @@ ProfileExtension = function (parent) {
      */
     render: function () {
       initEventListeners();
+
       FB.getLoginStatus(function(response) {
-        if (response.status == "not_authorized") {
-          parent.find(".js-facebook-connect").show();
+        if (response.status != "connected") {
+          parent.find(".js-facebook-connect").css({ display: "inline-block" });
         } else {
-          connect();
+          checkPermissions();
         }
       });
     }
