@@ -1,0 +1,20 @@
+{
+  "name": "fb-profile-ext",
+  "version": "0.1.0",
+  "description": "Facebook Profile Extension",
+  "main": "index.js",
+  "dependencies": {
+    "jsdom": "~0.6.5",
+    "express": "~3.2.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/seykron/fb-profile-extension.git"
+  },
+  "author": "Matías MI",
+  "license": "BSD"
+}

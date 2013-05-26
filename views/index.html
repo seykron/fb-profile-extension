@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Facebook "extended" profile</title>
+    <link rel="stylesheet" type="text/css" href="/asset/css/ProfileExtension.css">
+  </head>
+  <body>
+    <div class="profile-extension">
+      <a class="js-facebook-connect fb-button">
+        <span class="fb-button-text">Connect with Facebook</span>
+      </a>
+      <span class="js-info"><!-- Progress information --></span>
+
+      <div class="js-profile">
+        <p>
+          <span>Full name: </span>
+          <span class="js-full-name"><!-- Full name --></span>
+        </p>
+        <p>
+          <span>DNI: </span>
+          <span class="js-dni"><!-- dni --></span>
+        </p>
+        <p>
+          <span>Legal address: </span>
+          <span class="js-address"><!-- Address --></span>
+        </p>
+        <p>
+          <span>Location: </span>
+          <span class="js-location"><!-- Legal location --></span>
+        </p>
+        <p>
+          <span>CP: </span>
+          <span class="js-cp"><!-- CP --></span>
+        </p>
+        <p>
+          <span>Job: </span>
+          <span class="js-job"><!-- Job title --></span>
+        </p>
+      </div>
+
+      <form class="js-search-box search-box">
+        <label>
+          Your first name (i.e.: John):
+          <input type="text" name="first-name" />
+        </label>
+        <label>
+          Your last name (i.e.: Smith):
+          <input type="text" name="last-name" />
+        </label>
+        <label>
+          Your age (i.e.: 31):
+          <input type="text" name="age" />
+        </label>
+        <button class="js-search">Tell me!</button>
+      </form>
+    </div>
+
+    <script type="text/javascript" src="/asset/js/ProfileExtension.js"></script>
+    <script type="text/javascript" src="/asset/js/vendor/jquery-1.10.0.min.js"></script>
+
+    <!-- Facebook JavaScript SDK include snippet -->
+    <script type="text/javascript" src="//connect.facebook.net/en_GB/all.js"></script>
+
+    <script type="text/javascript">
+      jQuery(function () {
+        var view = new ProfileExtension(jQuery(".profile-extension"));
+        FB.init({
+          appId: 544786665573269,
+          xfbml: true
+        })
+        view.render();
+      });
+    </script>
+  </body>
+</html>
